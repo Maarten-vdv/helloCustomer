@@ -1,0 +1,27 @@
+@use 'colors' as colors;
+
+h3 {
+    margin: 0;
+    font-variant: small-caps;
+    color: colors.$darkblue;
+}
+
+.header {
+    display: flex;
+    background-color: colors.$lighterGray;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    border-radius: 15px 0 0 15px;
+    background-color: white;
+    overflow: hidden;
+
+    & > .content {
+        width: 1100px;
+        align-self: center;
+    }
+}

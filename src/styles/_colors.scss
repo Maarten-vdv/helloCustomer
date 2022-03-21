@@ -1,0 +1,75 @@
+@use '@angular/material' as mat;
+
+$primaryColors: (
+  50 : #e0edff,
+  100 : #b3d3ff,
+  200 : #80b5ff,
+  300 : #4d97ff,
+  400 : #2681ff,
+  500 : #006bff,
+  600 : #0063ff,
+  700 : #0058ff,
+  800 : #004eff, a 900 : #003cff,
+  A100 : #ffffff,
+  A200 : #f2f4ff,
+  A400 : #bfcaff,
+  A700 : #a6b5ff,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+/* For use in src/lib/core/theming/_palette.scss */
+$accentColors: (
+  50 : #e5f9eb,
+  100 : #bef0ce,
+  200 : #93e6ad,
+  300 : #67db8c,
+  400 : #47d474,
+  500 : #26cc5b,
+  600 : #22C753,
+  700 : #1CC049,
+  800 : #17b940,
+  900 : #0dad2f,
+  A100 : #dbffe1,
+  A200 : #a8ffb7,
+  A400 : #75ff8d,
+  A700 : #5cff78,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$lighterGray: #F2F2F2;
+$lightGray: #EFEFEF;
+
+$darkblue: #003161;
+
+$primaryPalette: mat.define-palette($primaryColors);
+$accentPalette: mat.define-palette($accentColors);

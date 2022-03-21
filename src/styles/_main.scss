@@ -1,0 +1,16 @@
+@use '@angular/material' as mat;
+@use 'colors' as colors;
+
+* {
+    font-family: Roboto, sans-serif;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-color: mat.get-color-from-palette(colors.$primaryPalette, "default");
+}
+

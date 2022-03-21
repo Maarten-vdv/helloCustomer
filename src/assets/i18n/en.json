@@ -1,0 +1,35 @@
+{
+    "actions": {
+        "cancel": "cancel",
+        "save": "save {{entity}}"
+    },
+    "form": {
+        "error": {
+            "emailNotMatch": "The email address does not match",
+            "invalidMail": "You must enter a valid email address",
+            "required": "You must enter a value"
+        },
+        "field": {
+            "optional": "optional"
+        }
+    },
+    "user": {
+        "add": {
+            "title": "Add new user",
+            "personalInfo": "personal info",
+            "userRole": "assing a role",
+            "permissions": "custom access permisisons"
+        },
+        "entityName": "user",
+        "field": {
+            "confirmEmail": "confirm email address",
+            "email": "Email address",
+            "firstName": "First name",
+            "language": "Language",
+            "lastName": "Last name"
+        },
+        "role": {
+            "extraInfo": "Don’t understand how the roles work? Learn more about it"
+        }
+    }
+}

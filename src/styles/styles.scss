@@ -1,0 +1,26 @@
+@use '@angular/material' as mat;
+@import "colors";
+@import 'normalize.css';
+@import "spacing";
+
+@include mat.core();
+
+
+$theme-typography: mat.define-typography-config(
+  $font-family: Roboto sans-serif
+);
+
+$theme: mat.define-light-theme((
+  color: (
+    primary: $primaryPalette,
+    accent: $accentPalette
+  ),
+  typography: $theme-typography
+));
+
+@include mat.all-component-themes($theme);
+
+@import "main";
+@import "layout";
+@import "forms";
+@include spacing;
