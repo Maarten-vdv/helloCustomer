@@ -1,4 +1,4 @@
-import { FormControl } from '@angular/forms';
+import {FormControl} from '@angular/forms';
 
 export function ConfirmValidator(confirmInput: string) {
     let confirmControl: FormControl;
@@ -20,7 +20,7 @@ export function ConfirmValidator(confirmInput: string) {
         if (controlToConfirm.value?.toLocaleLowerCase() !==
             confirmControl.value?.toLocaleLowerCase()
         ) {
-            return { noMatch: true };
+            return {noMatch: true};
         }
 
         return null;

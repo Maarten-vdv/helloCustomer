@@ -12,8 +12,9 @@ import {UserPermissions} from "../../models/UserPermissions";
     selector: 'app-add-user',
     template: `
         <ng-container *transloco="let t">
-            <div class="container mt-2 ml-2">
-                <div class="header p-2">
+            <div class="container">
+
+                <div class="header p-2 pl-5 pr-4">
                     <h2>{{t('user.add.title')}}</h2>
                     <div class="actions">
                         <button mat-button color="primary" (click)="reset()">
@@ -21,26 +22,28 @@ import {UserPermissions} from "../../models/UserPermissions";
                         </button>
                         <button mat-flat-button (click)="doSave()"
                                 [loading]="saving"
-                                [disabled]="userForm.invalid && userForm.touched && !firstSave"
-                                color="accent">{{t('actions.save', {entity: t('user.entityName')}) }}
+                                [color]="'accent'"
+                                [disabled]="(userForm.invalid && userForm.touched && !firstSave) || saving"
+                                color="accent">
+                            <span>{{t('actions.save', {entity: t('user.entityName')}) }}</span>
                         </button>
                     </div>
                 </div>
 
                 <ng-container [formGroup]="userForm">
-                    <app-personal-info formGroupName="personalInfo" class="content m-3"
+                    <app-personal-info formGroupName="personalInfo" class="content mt-3 mb-3"
                                        [languages]="languages">
                     </app-personal-info>
 
                     <mat-divider></mat-divider>
 
-                    <app-user-role class="content m-3" [roles]="userRoles"
+                    <app-user-role class="content mt-3 mb-3" [roles]="userRoles"
                                    formControlName="role">
                     </app-user-role>
 
                     <mat-divider></mat-divider>
 
-                    <app-user-permissions class="content m-3" formGroupName="permissions"
+                    <app-user-permissions class="content mt-3 mb-3" formGroupName="permissions"
                                           [teamStructures]="teamStructures">
                     </app-user-permissions>
                 </ng-container>
@@ -87,8 +90,35 @@ export class AddUserComponent implements OnChanges {
                 "confirmEmail": ['', [Validators.required, ConfirmValidator('email')]],
                 "languageId": [undefined, [Validators.required]]
             }),
-            role: [],
+            role: [undefined, [Validators.required]],
             permissions: this.fb.group({})
+        });
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if ((changes['possiblePermissions'] || changes['teamStructures'])
+            && this.possiblePermissions && this.teamStructures) {
+            this.createPermissionControls();
+        }
+    }
+
+    private createPermissionControls() {
+        const permissionsCtrl = <FormGroup>this.userForm.get('permissions');
+        this.teamStructures.map(t => t.id).forEach(structureId => {
+            const structureCtrl = this.fb.group({});
+
+            Object.keys(this.possiblePermissions).forEach(category => {
+                const categoryGroup = this.fb.group({});
+                Object.keys(this.possiblePermissions[category]).forEach(touchPoint => {
+                    const touchPointCtrl = this.fb.group({});
+                    this.possiblePermissions[category][touchPoint].forEach(permission => {
+                        touchPointCtrl.addControl(permission, this.fb.control(false));
+                    });
+                    categoryGroup.addControl(touchPoint, touchPointCtrl);
+                });
+                structureCtrl.addControl(category, categoryGroup);
+            });
+            permissionsCtrl.addControl(structureId, structureCtrl)
         });
     }
 
@@ -96,9 +126,20 @@ export class AddUserComponent implements OnChanges {
         validateForm(this.userForm);
 
         if (this.userForm.valid) {
-            const user = this.userForm.value;
-            delete user.personalInfo.confirmEmail;
-            this.save.emit(user);
+            const userValue = this.userForm.value;
+            delete userValue.personalInfo.confirmEmail;
+
+            // convert the true/false state of permissions to a list of permissions that are active
+            Object.keys(userValue.permissions).forEach(structure => {
+                Object.keys(userValue.permissions[structure]).forEach(category => {
+                    Object.keys(userValue.permissions[structure][category]).forEach(touchPoint => {
+                        const permissions = userValue.permissions[structure][category][touchPoint];
+                        userValue.permissions[structure][category][touchPoint] = Object.keys(permissions).filter(key => !!permissions[key]);
+                    });
+                });
+            });
+
+            this.save.emit(userValue);
         }
 
         this.firstSave = false;
@@ -106,31 +147,6 @@ export class AddUserComponent implements OnChanges {
 
     reset() {
         this.userForm.reset({});
+        this.firstSave = true;
     }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        if ((changes['possiblePermissions'] || changes['teamStructures'])
-            && this.possiblePermissions && this.teamStructures) {
-
-            const permissionsCtrl = <FormGroup>this.userForm.get('permissions');
-            this.teamStructures.map(t => t.id).forEach(structureId => {
-                const structureCtrl = this.fb.group({});
-
-                Object.keys(this.possiblePermissions).forEach(category => {
-                    const categoryGroup = this.fb.group({});
-                    Object.keys(this.possiblePermissions[category]).forEach(touchPoint => {
-                        const touchPointCtrl = this.fb.group({});
-                        this.possiblePermissions[category][touchPoint].forEach(permission => {
-                            touchPointCtrl.addControl(permission, this.fb.control([false]));
-                        });
-                        categoryGroup.addControl(touchPoint, touchPointCtrl);
-                    });
-                    structureCtrl.addControl(category, categoryGroup);
-                });
-                permissionsCtrl.addControl(structureId, structureCtrl)
-            });
-
-        }
-    }
-
 }

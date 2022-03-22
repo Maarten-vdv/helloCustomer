@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {LanguageService} from "../../services/language.service";
 import {Observable} from "rxjs";
@@ -6,19 +6,22 @@ import {UserRole} from "../../models/UserRole";
 import {Language} from "../../models/Language";
 import {TeamStructure} from "../../models/TeamStructure";
 import {UserPermissions} from "../../models/UserPermissions";
+import {User} from "../../models/User";
 
 @Component({
     selector: 'app-add-user-page',
     template: `
-        <app-add-user [userRoles]="userRoles$ | async"
-                      [languages]="languages$ | async"
-                      [possiblePermissions]="possiblePermissions$ | async"
-                      [teamStructures]="teamStructures$ | async"
-                      [saving]="saving$ | async">
+        <app-add-user
+            [userRoles]="userRoles$ | async"
+            [languages]="languages$ | async"
+            [possiblePermissions]="possiblePermissions$ | async"
+            [teamStructures]="teamStructures$ | async"
+            [saving]="saving$ | async"
+            (save)="doSave($event)">
         </app-add-user>
     `,
 })
-export class AddUserPageComponent implements OnInit {
+export class AddUserPageComponent {
 
     userRoles$: Observable<UserRole[]>;
     languages$: Observable<Language[]>;
@@ -34,7 +37,7 @@ export class AddUserPageComponent implements OnInit {
         this.possiblePermissions$ = this.userService.getPossibleUserPermissions$();
     }
 
-    ngOnInit(): void {
+    doSave(user: User) {
+        this.userService.save(user);
     }
-
 }

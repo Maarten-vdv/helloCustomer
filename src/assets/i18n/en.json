@@ -17,8 +17,15 @@
         "add": {
             "title": "Add new user",
             "personalInfo": "personal info",
-            "userRole": "assing a role",
-            "permissions": "custom access permisisons"
+            "userRole": "assign a role",
+            "permissions": {
+                "title":  "custom access permissions",
+                "hide": "hide permissions & access",
+                "show": "show permissions & access",
+                "dashboardaccess": "dashboard access",
+                "reports": "reports",
+                "touchPoints": "touch points"
+            }
         },
         "entityName": "user",
         "field": {
@@ -29,7 +36,8 @@
             "lastName": "Last name"
         },
         "role": {
-            "extraInfo": "Don’t understand how the roles work? Learn more about it"
+            "extraInfo": "Don’t understand how the roles work?",
+            "extraInfoLink": "Learn more about it."
         }
     }
 }

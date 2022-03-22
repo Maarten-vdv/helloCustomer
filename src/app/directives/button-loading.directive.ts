@@ -41,7 +41,7 @@ export class ButtonLoadingDirective implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        const  loading = changes["loading"];
+        const loading = changes["loading"];
 
         if (!loading) {
             return;
@@ -61,7 +61,7 @@ export class ButtonLoadingDirective implements OnChanges {
     private createSpinner(): void {
         if (!this.spinner) {
             this.spinner = this.viewContainerRef.createComponent(MatProgressSpinner);
-            // this.spinner.instance.color = this.color;
+            this.spinner.instance.color = this.color;
             this.spinner.instance.diameter = 20;
             this.spinner.instance.mode = 'indeterminate';
             this.renderer.appendChild(this.nativeElement, this.spinner.instance._elementRef.nativeElement);

@@ -1,6 +1,6 @@
 @use 'src/styles/colors' as colors;
 @use 'src/styles/icons' as icons;
-@use '../../../../../node_modules/@angular/material/index' as mat;
+@use '@angular/material' as mat;
 
 :host {
     display: flex;
@@ -9,12 +9,19 @@
 
 .list {
     display: flex;
+    justify-content: space-between;
 }
+
+.small {
+    font-size: 0.9rem;
+}
+
 .role {
     border: 1px solid colors.$lightGray;
-    width: 260px;
-    height: 90px;
+    width: 230px;
     position: relative;
+    margin: 1px;
+    box-sizing: content-box;
 
     &:hover {
         cursor: pointer;
@@ -23,6 +30,8 @@
     &:hover,
     &.selected {
         border-color: mat.get-color-from-palette(colors.$primaryPalette, 'default');
+        border-width: 2px;
+        margin: 0;
     }
 
     &.selected::after {
@@ -40,7 +49,7 @@
     }
 
     &.selected::before {
-        content:"";
+        content: "";
         position: absolute;
         top: 4px;
         right: 3px;
@@ -50,6 +59,7 @@
         z-index: 1000;
     }
 
-    .container:after {
+    .description {
+        color: colors.$darkGray
     }
 }

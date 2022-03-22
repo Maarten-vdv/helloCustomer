@@ -82,5 +82,4 @@ export class PersonalInfoComponent implements OnInit {
         }
         return "";
     }
-
 }

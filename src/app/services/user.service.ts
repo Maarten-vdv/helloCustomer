@@ -21,7 +21,7 @@ export class UserService {
     ]
 
     private readonly userPermissions: UserPermissions = {
-        "dashboardAccess": {
+        "dashboardaccess": {
             'Touchpoint email 1': ['Default', 'Custom NPS dashboard'],
             'Touchpoint email 2': ['Default']
         },
