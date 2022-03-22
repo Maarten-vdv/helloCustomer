@@ -14,6 +14,7 @@ import {UserRoleComponent} from './components/add-user/user-role/user-role.compo
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { UserPermissionsComponent } from './components/add-user/user-permissions/user-permissions.component';
 import {ButtonLoadingDirective} from "./directives/button-loading.directive";
+import { AddUserPageComponent } from './components/add-user/add-user-page.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import {ButtonLoadingDirective} from "./directives/button-loading.directive";
         AddUserComponent,
         UserRoleComponent,
         UserPermissionsComponent,
-        ButtonLoadingDirective
+        ButtonLoadingDirective,
+        AddUserPageComponent
     ],
     imports: [
         BrowserModule,

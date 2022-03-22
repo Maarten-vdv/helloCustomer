@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../services/user.service";
-import {Observable} from "rxjs";
 import {UserRole} from "../../models/UserRole";
 import {ConfirmValidator} from "../../util/confirm-validator";
-import {LanguageService} from "../../services/language.service";
 import {Language} from "../../models/Language";
 import {validateForm} from "../../util/validateForm";
+import {User} from "../../models/User";
+import {TeamStructure} from "../../models/TeamStructure";
+import {UserPermissions} from "../../models/UserPermissions";
 
 @Component({
     selector: 'app-add-user',
@@ -19,8 +19,8 @@ import {validateForm} from "../../util/validateForm";
                         <button mat-button color="primary" (click)="reset()">
                             {{t('actions.cancel') }}
                         </button>
-                        <button mat-flat-button (click)="save()"
-                                [loading]="saving$ | async"
+                        <button mat-flat-button (click)="doSave()"
+                                [loading]="saving"
                                 [disabled]="userForm.invalid && userForm.touched && !firstSave"
                                 color="accent">{{t('actions.save', {entity: t('user.entityName')}) }}
                         </button>
@@ -29,19 +29,19 @@ import {validateForm} from "../../util/validateForm";
 
                 <ng-container [formGroup]="userForm">
                     <app-personal-info formGroupName="personalInfo" class="content m-3"
-                                       [languages]="languages$ | async">
+                                       [languages]="languages">
                     </app-personal-info>
 
                     <mat-divider></mat-divider>
 
-                    <app-user-role class="content m-3" [roles]="userRoles$ | async"
+                    <app-user-role class="content m-3" [roles]="userRoles"
                                    formControlName="role">
                     </app-user-role>
 
                     <mat-divider></mat-divider>
 
                     <app-user-permissions class="content m-3" formGroupName="permissions"
-                                          [permissionGroups]="permissionGroups" [userGroups]="userGroups">
+                                          [teamStructures]="teamStructures">
                     </app-user-permissions>
                 </ng-container>
 
@@ -65,18 +65,20 @@ import {validateForm} from "../../util/validateForm";
         }
     `]
 })
-export class AddUserComponent {
+export class AddUserComponent implements OnChanges {
+
+    @Input() languages: Language[];
+    @Input() userRoles: UserRole[];
+    @Input() possiblePermissions: UserPermissions;
+    @Input() teamStructures: TeamStructure[];
+    @Input() saving: boolean;
+
+    @Output() save = new EventEmitter<User>();
 
     userForm: FormGroup;
-    userGroups: string[][];
-    permissionGroups: string[];
-
-    userRoles$: Observable<UserRole[]>;
-    languages$: Observable<Language[]>;
-    saving$: Observable<boolean>;
     firstSave = true;
 
-    constructor(private fb: FormBuilder, private userService: UserService, private languageService: LanguageService) {
+    constructor(private fb: FormBuilder) {
         this.userForm = this.fb.group({
             personalInfo: this.fb.group({
                 "firstName": [],
@@ -86,23 +88,17 @@ export class AddUserComponent {
                 "languageId": [undefined, [Validators.required]]
             }),
             role: [],
-            permissions: []
+            permissions: this.fb.group({})
         });
-
-        this.userForm.patchValue({role: 'admin'});
-
-        this.userRoles$ = this.userService.getUserRoles$();
-        this.saving$ = this.userService.isSaving$();
-        this.languages$ = this.languageService.getLanguages$();
     }
 
-    save() {
+    doSave() {
         validateForm(this.userForm);
 
         if (this.userForm.valid) {
             const user = this.userForm.value;
             delete user.personalInfo.confirmEmail;
-            this.userService.save(user);
+            this.save.emit(user);
         }
 
         this.firstSave = false;
@@ -110,6 +106,31 @@ export class AddUserComponent {
 
     reset() {
         this.userForm.reset({});
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if ((changes['possiblePermissions'] || changes['teamStructures'])
+            && this.possiblePermissions && this.teamStructures) {
+
+            const permissionsCtrl = <FormGroup>this.userForm.get('permissions');
+            this.teamStructures.map(t => t.id).forEach(structureId => {
+                const structureCtrl = this.fb.group({});
+
+                Object.keys(this.possiblePermissions).forEach(category => {
+                    const categoryGroup = this.fb.group({});
+                    Object.keys(this.possiblePermissions[category]).forEach(touchPoint => {
+                        const touchPointCtrl = this.fb.group({});
+                        this.possiblePermissions[category][touchPoint].forEach(permission => {
+                            touchPointCtrl.addControl(permission, this.fb.control([false]));
+                        });
+                        categoryGroup.addControl(touchPoint, touchPointCtrl);
+                    });
+                    structureCtrl.addControl(category, categoryGroup);
+                });
+                permissionsCtrl.addControl(structureId, structureCtrl)
+            });
+
+        }
     }
 
 }

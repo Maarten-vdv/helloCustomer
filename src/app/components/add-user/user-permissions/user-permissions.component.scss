@@ -1,0 +1,69 @@
+@use 'colors' as colors;
+@use 'icons' as icons;
+
+.heading {
+font-variant: small-caps;
+}
+
+.row {
+    display: flex;
+
+    &:nth-child(even) {
+        background-color: colors.$lightestGray;
+    }
+}
+
+.category {
+    display: flex;
+    align-items: center;
+    margin: 0.5rem 0;
+}
+
+.touchPoint {
+    flex-basis: 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.nameWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.touchPoint-icon {
+    @include icons.touchPoint_icon(colors.encodeColor(colors.$darkblue));
+    background-position: center;
+    background-size: contain;
+    width: 2rem;
+    height: 2rem;
+    margin: 0 0.5rem;
+}
+
+.dashboardAccess-icon {
+    @include icons.dashboard_icon(colors.encodeColor(colors.$darkblue));
+    background-size: contain;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+
+    &.large {
+        width: 2rem;
+        height: 2rem;
+    }
+}
+
+.reports-icon {
+    @include icons.report_icon(colors.encodeColor(colors.$darkblue));
+    background-size: contain;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+}
+
+.permissions {
+    flex-basis: 0;
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+}

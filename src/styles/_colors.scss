@@ -66,6 +66,7 @@ $accentColors: (
   )
 );
 
+$lightestGray: #F8F8F8;
 $lighterGray: #F2F2F2;
 $lightGray: #EFEFEF;
 
@@ -73,3 +74,12 @@ $darkblue: #003161;
 
 $primaryPalette: mat.define-palette($primaryColors);
 $accentPalette: mat.define-palette($accentColors);
+
+@function encodeColor($string) {
+    @if type-of($string) == 'color' {
+        $hex: str-slice(ie-hex-str($string), 4);
+        $string:unquote("#{$hex}");
+    }
+    $string: '%23' + $string;
+    @return $string;
+}

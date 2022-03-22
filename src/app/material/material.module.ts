@@ -5,6 +5,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatSelectModule} from "@angular/material/select";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatExpansionModule} from "@angular/material/expansion";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 const MATERIAL = [
@@ -13,7 +14,8 @@ const MATERIAL = [
     MatInputModule,
     MatSelectModule,
     MatDividerModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCheckboxModule
 ]
 
 @NgModule({

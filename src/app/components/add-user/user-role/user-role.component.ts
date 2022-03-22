@@ -9,9 +9,9 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
         <ng-container *transloco="let t">
             <h3>{{t('user.add.userRole')}}</h3>
 
-            <div class="list mt-2 mb-2">
+            <div class="list mt-3 mb-3">
                 <div *ngFor="let role of roles; let l = last; let f= first"
-                     class="role p-2 pt-0" [class.ml-2]="!f"
+                     class="role p-4 pt-0" [class.ml-2]="!f"
                      [class.mr-2]="!f"
                      [class.selected]="role.id === selectedId"
                      (click)="select(role.id)">
