@@ -7,7 +7,8 @@
         "error": {
             "emailNotMatch": "The email address does not match",
             "invalidMail": "You must enter a valid email address",
-            "required": "You must enter a value"
+            "required": "You must enter a value",
+            "required_select": "You must select a value"
         },
         "field": {
             "optional": "optional"

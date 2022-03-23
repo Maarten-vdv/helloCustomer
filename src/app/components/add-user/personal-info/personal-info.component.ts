@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormGroup, FormGroupDirective} from "@angular/forms";
 import {Language} from "../../../models/Language";
-import {TranslocoService} from "@ngneat/transloco";
 
 @Component({
     selector: 'app-personal-info',
@@ -23,13 +22,14 @@ import {TranslocoService} from "@ngneat/transloco";
                 <mat-form-field hideRequiredMarker class="example-form-field">
                     <mat-label>{{t('user.field.email')}}</mat-label>
                     <input matInput email name="email" type="text" formControlName="email">
-                    <mat-error *ngIf="group.get('email').invalid">{{getErrorMessage('email')}}</mat-error>
+                    <mat-error *ngIf="group.get('email').invalid">{{t(getErrorMessage('email'))}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field hideRequiredMarker class="example-form-field">
                     <mat-label>{{t('user.field.confirmEmail')}}</mat-label>
                     <input matInput type="text" formControlName="confirmEmail">
-                    <mat-error *ngIf="group.get('confirmEmail').invalid">{{getErrorMessage('confirmEmail')}}</mat-error>
+                    <mat-error
+                        *ngIf="group.get('confirmEmail').invalid">{{t(getErrorMessage('confirmEmail'))}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field hideRequiredMarker class="example-form-field">
@@ -39,7 +39,7 @@ import {TranslocoService} from "@ngneat/transloco";
                             {{language.name}}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="group.get('languageId').invalid">{{getErrorMessage('languageId')}}</mat-error>
+                    <mat-error *ngIf="group.get('languageId').invalid">{{t(getErrorMessage('languageId'))}}</mat-error>
                 </mat-form-field>
             </ng-container>
         </ng-container>
@@ -65,7 +65,7 @@ export class PersonalInfoComponent implements OnInit {
     @Input() formGroupName;
     @Input() languages: Language[];
 
-    constructor(private rootFormGroup: FormGroupDirective, private transloco: TranslocoService) {
+    constructor(private rootFormGroup: FormGroupDirective) {
     }
 
     ngOnInit(): void {
@@ -74,11 +74,11 @@ export class PersonalInfoComponent implements OnInit {
 
     getErrorMessage(field: string) {
         if (this.group.get(field).hasError('required')) {
-            return this.transloco.translate('form.error.required');
+            return 'form.error.required';
         } else if (this.group.get(field).hasError('email')) {
-            return this.transloco.translate('form.error.invalidMail');
+            return 'form.error.invalidMail';
         } else if (this.group.get(field).hasError('noMatch')) {
-            return this.transloco.translate('form.error.emailNotMatch');
+            return 'form.error.emailNotMatch';
         }
         return "";
     }

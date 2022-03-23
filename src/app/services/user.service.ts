@@ -16,8 +16,8 @@ export class UserService {
         {id: "employee", name: "Employee", description: "Has access only to personally assigned data"}
     ];
     private readonly teams: TeamStructure[] = [
-        {id: "team1", team: "Ontwikkel", folder: "Team A"},
-        {id: "team2", team: "Client team", folder: "Team Brussel"}
+        {id: "ontwikkel/teamA", team: "Ontwikkel", folder: "Team A"},
+        {id: "clientTeam/teamBrussel", team: "Client team", folder: "Team Brussel"}
     ]
 
     private readonly userPermissions: UserPermissions = {
@@ -40,6 +40,7 @@ export class UserService {
 
     save(user: User): void {
         this.saving$.next(true);
+        console.log('User saved:');
         console.log(user);
         timer(2000).subscribe(() => this.saving$.next(false));
     }
