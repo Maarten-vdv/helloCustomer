@@ -54,6 +54,7 @@ import {UserPermissions} from "../../models/UserPermissions";
         :host {
             display: flex;
             flex-direction: column;
+            flex-grow: 1;
         }
 
         .actions {

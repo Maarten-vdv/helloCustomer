@@ -31,7 +31,6 @@ export class UserService {
         }
     };
 
-
     private saving$ = new BehaviorSubject<boolean>(false);
 
     getUserRoles$(): Observable<UserRole[]> {

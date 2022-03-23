@@ -20,6 +20,13 @@ import {User} from "../../models/User";
             (save)="doSave($event)">
         </app-add-user>
     `,
+    styles: [`
+        :host {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+    `]
 })
 export class AddUserPageComponent {
 

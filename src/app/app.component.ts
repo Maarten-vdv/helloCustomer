@@ -4,7 +4,7 @@ import {Component} from '@angular/core';
     selector: 'app-root',
     template: `
         <!-- dummy for the the toolbar and navivation space-->
-        <div style="padding-left: 75px; padding-top: 50px">
+        <div class="wrapper">
             <app-add-user-page></app-add-user-page>
         </div>
     `,
@@ -14,6 +14,14 @@ import {Component} from '@angular/core';
             flex-direction: column;
             height: 100%;
             width: 100%;
+        }
+
+        .wrapper {
+            padding-left: 75px;
+            padding-top: 50px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
     `]
 })
