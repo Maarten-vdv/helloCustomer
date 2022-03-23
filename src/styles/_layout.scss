@@ -5,6 +5,7 @@ h3 {
     font-variant: small-caps;
     color: colors.$darkblue;
 }
+
 h4 {
     color: colors.$darkblue;
 }
@@ -26,6 +27,14 @@ h4 {
 
     .content {
         width: 800px;
+
+        @include media-xl-up {
+            width: 1000px;
+        }
+        @include media-xxl-up {
+            width: 1200px;
+        }
+
         align-self: center;
         overflow: auto;
     }

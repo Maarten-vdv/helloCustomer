@@ -29,7 +29,7 @@
         },
         "entityName": "user",
         "field": {
-            "confirmEmail": "confirm email address",
+            "confirmEmail": "Confirm email address",
             "email": "Email address",
             "firstName": "First name",
             "language": "Language",

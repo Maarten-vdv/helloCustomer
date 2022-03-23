@@ -9,11 +9,11 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
         <ng-container *transloco="let t">
             <h3>{{t('user.add.userRole')}}</h3>
 
-            <div class="list mt-3 mb-3">
-                <div *ngFor="let role of roles;" class="role pl-4 pr-0 pb-2"
+            <div class="list mt-3 mb-2">
+                <div *ngFor="let role of roles" class="role pl-4 pr-2 pb-3"
                      [class.selected]="role.id === selectedId"
                      (click)="select(role.id)">
-                    <h4>{{role.name}}</h4>
+                    <h4 class="mb-2">{{role.name}}</h4>
                     <span class="description">{{role.description}}</span>
                 </div>
             </div>

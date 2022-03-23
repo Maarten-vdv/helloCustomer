@@ -9,7 +9,7 @@
 
 .list {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .small {
@@ -20,8 +20,12 @@
     border: 1px solid colors.$lightGray;
     width: 230px;
     position: relative;
-    margin: 1px;
+    margin: 1rem;
     box-sizing: content-box;
+
+    &:first-child {
+        margin-left: 1px;
+    }
 
     &:hover {
         cursor: pointer;
@@ -31,7 +35,11 @@
     &.selected {
         border-color: mat.get-color-from-palette(colors.$primaryPalette, 'default');
         border-width: 2px;
-        margin: 0;
+        margin: calc(1rem - 1px);
+
+        &:first-child {
+            margin-left: 0;
+        }
     }
 
     &.selected::after {
